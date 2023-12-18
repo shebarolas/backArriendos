@@ -40,6 +40,12 @@ const HotelSchema = new Schema({
         type: Boolean,
         default: false
     },
+    lat: {
+        type: String,
+    },
+    long: {
+        type: String,
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: "User"
