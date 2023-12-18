@@ -1,19 +1,19 @@
 const {Schema, model} = require('mongoose');
 
 const HotelSchema = new Schema({
-    name: {
+    nombre: {
         type: String,
         required: true
     },
-    type: {
+    tipo: {
         type: String,
         required: true
     },
-    city: {
+    ciudad: {
         type: String,
         required: true
     },
-    adress: {
+    direccion: {
         type: String,
         required: true
     },
@@ -24,7 +24,7 @@ const HotelSchema = new Schema({
         type: String,
         required: true
     },
-    price: {
+    valor: {
         type: Number,
         required: true
     },
@@ -36,7 +36,7 @@ const HotelSchema = new Schema({
         type: Number,
         required: true
     },
-    featured: {
+    visible: {
         type: Boolean,
         default: false
     },

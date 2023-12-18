@@ -11,11 +11,13 @@ const createSession = async (req, res) => {
         line_items: [
             {
                 price_data: {
-                    currency: 'usd',
+                    currency: 'CLP',
                     product_data: {
                         name: 'Membresia'
                     },
-                    unit_amount: 10000
+                    unit_amount: 10000,
+                    destination:""
+                    
                 },
                 quantity: 1
             }

@@ -5,21 +5,19 @@ const User = require('../Models/User');
 
 const register = async (req, res) => {
 
-    const {name, type, city, adress, desc, price, bano, habitaciones} = req.body;
+    const {nombre, tipo, ciudad, direccion, desc, valor, bano, habitaciones} = req.body;
+    console.log(req.body)
 
-    if(name == '' || type == '' || city == '' || adress == '' || desc == '' || price <= 0 || bano <=0 || habitaciones <=0){
+    if(nombre == '' || tipo == '' || ciudad == '' || direccion == '' || desc == '' || valor <= 0 || bano <=0 || habitaciones <=0){
         return res.status(400).json({
             message: 'Faltan datos'
         })
     }
-
     const hotel = new Hotel({
         ...req.body,
         photos: req.files.map(file => file.path),
 
     });
-
-    console.log(hotel);
 
     try{
         console.log('asdasd');
@@ -76,7 +74,7 @@ const countCity = async (req, res, next) => {
 
     try {
         const list = await Promise.all(cities.map(city => {
-            return Hotel.countDocuments({city: city})   
+            return Hotel.countDocuments({ciudad: city})   
         }))
         return res.status(200).json(list);
     } catch (error) {
@@ -86,14 +84,14 @@ const countCity = async (req, res, next) => {
 }
 const countType = async (req, res) => {
     try {
-        const houseCount = await Hotel.countDocuments({type: "House"});
-        const aparmentCount = await Hotel.countDocuments({type: "Aparment"});
-        const villasCount = await Hotel.countDocuments({type: "Others"})
+        const houseCount = await Hotel.countDocuments({tipo: "Casa"});
+        const aparmentCount = await Hotel.countDocuments({tipo: "Departamento"});
+        const villasCount = await Hotel.countDocuments({tipo: "Otros"})
 
         return res.status(200).json([
-            { type: "House", count: houseCount},
-            { type: "Aparment", count: aparmentCount},
-            { type: "Others", count: villasCount}
+            { tipo: "Casa", count: houseCount},
+            { tipo: "Departamento", count: aparmentCount},
+            { tipo: "Otros", count: villasCount}
         ])        
     } catch (error) {
         return res.status(500).json({error: error});
@@ -104,7 +102,7 @@ const countType = async (req, res) => {
 const countByIdUser = async (req, res) => {
     try {
         const hotel = await Hotel.countDocuments({user: req.params.id});
-        const hotel2 = await Hotel.countDocuments({user: req.params.id, featured: true});
+        const hotel2 = await Hotel.countDocuments({user: req.params.id, visible: true});
         const count = (hotel2*100)/hotel;
         const count1 = count.toFixed(2);
         res.status(200).json({count: count1,
@@ -127,7 +125,7 @@ const countMoney = async (req, res) => {
 }
 const countMoneyHouse = async (req, res) => {
     try {
-        const ress = await Hotel.find({user: req.params.id, featured:false});
+        const ress = await Hotel.find({user: req.params.id, visible:false});
         const result = ress.map(item => item.price);
         const total = result.reduce((a,b) => a+b, 0);
 
@@ -148,11 +146,11 @@ const getId = async (req, res) => {
 }
 const getAll = async (req, res) => {
 
-    const {min, max, ...other} = req.query;
+    const {min, max,...other} = req.query;
 
     try {
         const hotel = await Hotel.find({...other, 
-            price: { $gt: min | 0, $lt: max || 200000000000 }
+            valor: { $gt: min | 0, $lt: max || 200000000000 }
         });
         const arrnedador = await Promise.all(
             hotel.map(async (hotel) => {
