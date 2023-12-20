@@ -1,3 +1,4 @@
+const User = require("../Models/User");
 const Visitas = require("../Models/Visitas");
 
 const agendar = async(req, res) => {
@@ -41,12 +42,24 @@ const obtenerVisitasPorIdCliente = async(req, res) => {
 
     try {
         const visitas = await Visitas.find({idCliente: req.params.id}).sort({fecha: 1}).populate('idPropiedad');
+        const users =  await Promise.all(
+            visitas.map(async (visita) => {
+                const user = await User.findById({
+                    _id: visita.idPropiedad.user
+                });
+                console.log(user);
+                if (user){
+                    const {password, ...others} = user._doc;
+                    return {...visita._doc, user: others}
+                }
+                return {user };
+            }));
         if (!visitas) {
             return res.status(400).json({
                 msg: "No se encontraron visitas"
             });
         }
-        return res.json(visitas);
+        return res.json(users);
     } catch (error) {
         return res.status(500).json({
             msg: "Error interno del servidor"
