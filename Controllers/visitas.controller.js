@@ -40,7 +40,7 @@ const obtenerVisitasPorIdCliente = async(req, res) => {
     console.log(req.params.id);
 
     try {
-        const visitas = await Visitas.find({idCliente: req.params.id}).sort({fecha: 1});
+        const visitas = await Visitas.find({idCliente: req.params.id}).sort({fecha: 1}).populate('idPropiedad');
         if (!visitas) {
             return res.status(400).json({
                 msg: "No se encontraron visitas"
