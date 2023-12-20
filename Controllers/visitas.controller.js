@@ -37,8 +37,22 @@ const obtenerVisitasPorId = async(req, res) => {
 }
 
 const obtenerVisitasPorIdCliente = async(req, res) => {
-    const visitas = await Visitas.find({idCliente: req.params.id});
-    res.json(visitas);
+    console.log(req.params.id);
+
+    try {
+        const visitas = await Visitas.find({idCliente: req.params.id}).sort({fecha: 1});
+        if (!visitas) {
+            return res.status(400).json({
+                msg: "No se encontraron visitas"
+            });
+        }
+        return res.json(visitas);
+    } catch (error) {
+        return res.status(500).json({
+            msg: "Error interno del servidor"
+        });
+    }
+    
 }
 
 const obtenerVisitasPorIdPropiedad = async(req, res) => {
