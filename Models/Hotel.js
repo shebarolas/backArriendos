@@ -43,6 +43,10 @@ const HotelSchema = new Schema({
     lat: {
         type: String,
     },
+    arrendada : {
+        type: Boolean,
+        default: false
+    },
     long: {
         type: String,
     },

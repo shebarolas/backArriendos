@@ -24,7 +24,7 @@ const agendar = async (req, res) => {
         propId: id,
     });
     await arrendar.save();
-    await Hotel.findByIdAndUpdate({_id: id}, {featured: false});
+    await Hotel.findByIdAndUpdate({_id: id}, {arrendada: true});
     return res.status(200).json({msg: "Propiedad arrendada", arr: arrendar});
 
     }

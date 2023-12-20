@@ -7,6 +7,7 @@ const userRoutes = require('../Routes/user.routes');
 const arrRoutes = require('../Routes/arrendar.routes');
 const uploadImg = require('../Routes/images.routes');
 const payRoutes = require('../Routes/payment.routes');
+const visitasRoutes = require('../Routes/visitas.routes');
 const cookieParser = require('cookie-parser');
 
 class Server {
@@ -17,6 +18,7 @@ class Server {
         this.pasthArr = "/api/v1/arrendar";
         this.pathImg = "/api/v1/images";
         this.pathPay = "/api/v1/pay";
+        this.pathVisitas = "/api/v1/visitas";
         this.middleware();
         this.routes();
         this.conectDB();
@@ -37,6 +39,7 @@ class Server {
         this.app.use(this.pasthArr, arrRoutes);
         this.app.use(this.pathImg, uploadImg);
         this.app.use(this.pathPay, payRoutes );
+        this.app.use(this.pathVisitas, visitasRoutes);
 
     }
 
