@@ -22,8 +22,8 @@ const createSession = async (req, res) => {
             }
         ],
         mode: 'payment',
-        success_url: 'https://back-arriendos.onrender.com/success',
-        cancel_url: 'https://back-arriendos.onrender.com/'
+        success_url: 'https://frpnt-propiedades-sfjt-shebarolas.vercel.app/success',
+        cancel_url: 'https://frpnt-propiedades-sfjt-shebarolas.vercel.app/'
     });
 
     // const user = await User.findByIdAndUpdate(req.params.id, {
