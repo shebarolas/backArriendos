@@ -22,8 +22,8 @@ const createSession = async (req, res) => {
             }
         ],
         mode: 'payment',
-        success_url: 'http://localhost:5173/success',
-        cancel_url: 'http://localhost:5173/'
+        success_url: 'https://back-arriendos.onrender.com/success',
+        cancel_url: 'https://back-arriendos.onrender.com/'
     });
 
     // const user = await User.findByIdAndUpdate(req.params.id, {
