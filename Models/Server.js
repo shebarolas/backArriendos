@@ -26,11 +26,7 @@ class Server {
     middleware(){
         this.app.use(cookieParser());
         this.app.use(bodyParser.json());
-        this.app.use(cors({
-            origin: 'http://localhost:5173',
-            method: 'GET, POST, PUT, DELETE',
-            credentials: "include"
-        }));
+        this.app.use(cors());
 
     }
     routes(){
