@@ -8,7 +8,7 @@ const agendar = async (req, res) => {
    const existArr = await Arrendar.findOne({userId, propId: id});
 
    if(existArr){
-     return res.status(400).json({msg: "Ha arrendado la propiedad"});
+     return res.status(200).json({msg: "Ha arrendado la propiedad"});
    }else{
     
     const existHotel = await Hotel.findOne({
@@ -46,7 +46,22 @@ const datosUser = async (req, res) => {
     console.log(user);
 }
 
+const obtenerCasa  = async (req, res) => {
+    const {id} = req.params;
+    try {
+        const hotel = await Arrendar.find({
+            userId: id
+        }).populate('propId');
+        if(!hotel) return res.status(404).json({msg: "No hay casas"});
+        return res.status(200).json(hotel);
+    } catch (error) {
+        return res.status(500).json({error});
+    }
+    
+}
+
 module.exports = {
     agendar,
-    datosUser
+    datosUser,
+    obtenerCasa
 }
